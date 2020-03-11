@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p>aggiungi autore</p>
+    <form method="POST" action="/addautore">
+        <input type="text" name="id_autore" value="id autore" >
+        <input type="text" name="nome" value="nome autore"> 
+        <input type="text" name="cognome" value="cognome autore">
+        <input type="submit" value="invia">
+    </form>
+    <% autori.forEach(autore => { %>  
+        <ul> 
+          <li> id:  <%= autore.ID_autore %>  </li>  
+          <li> nome:  <%= autore.nome %>  </li>  
+          <li> cognome:    <%= autore.cognome %> </li>
+          <li> <a href="/modifica/autori/<%= autore.ID_autore   %>"> modifica </a> </li>
+          <li><form method="POST" action="/delautore">
+        <input type="hidden" name="id_autore" value="<%= autore.ID_autore %>">
+
+            <input type="submit" value="Elimina">
+          </form>
+        </li>
+        </ul>
+    
+ 
+    <% }) %>
+    <p>aggiungi libro</p>
+    <form method="POST" action="/addlibro">
+        <input type="text" name="id_libro" value="id libro">
+        <input type="text" name="titolo" value="titolo libro">
+        <input type="text" name="autore" value="id autore">
+        <input type="submit" value="invia">
+    </form>
+    <% libri.forEach(libro => { %>
+        <ul> 
+          <li> id:  <%= libro.ID_libro %>   </li>  
+            <li> titolo:  <%= libro.titolo %>   </li>  
+            <li>  autore:    <%= libro.autore %>  </li>
+            <li> <a href="/modifica/libri/<%= libro.ID_libro   %> "> modifica </a> </li>
+            <li><form method="POST" action="/dellibro">
+                <input type="hidden" name="id_libro" value="<%= libro.ID_libro %>">
+
+
+                <input type="submit" value="Elimina">
+              </form>
+            </li>
+          </ul>
+      
+       
+     
+       <% }) %>
+</body>
+</html>

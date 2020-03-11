@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p> questo è un paragrafo </p>
+    <% autori.forEach(autore => { %>  
+        <ul> 
+          <li> nome: <%= autore.nome %>  </li>  
+          <li>   cognome:  <%= autore.cognome %> </li>
+          <li>   id:   <%= autore.ID_autore %></li>
+        </ul>
+    
+ 
+    <% }) %>
+    <% libri.forEach(libro => { %>
+        <ul> 
+            <li> titolo:  <%= libro.titolo %>   </li>  
+            <li>   autore:   <%= libro.autore %>  </li>
+          </ul>
+      
+       
+     
+       <% }) %>
+</body>
+</html>
