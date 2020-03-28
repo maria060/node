@@ -48,10 +48,35 @@
                 <input type="submit" value="Elimina">
               </form>
             </li>
-          </ul>
-      
-       
-     
+          </ul>     
        <% }) %>
+       <h1>Relazione Autori-Libri</h1>
+    <form method="POST" action="/addautore">
+        <input type="text" name="id_autore" value="id autore" >
+        <input type="text" name="id_libro" value="id_libro"> 
+        <input type="text" name="modifica" value="modifica">
+        <input type="submit" value="invia">
+    </form>
+        
+        <% relazioni.forEach(relazione => { %>
+            <ul>
+                <li> id_autore <%= relazione.id_autore %></li>
+                <li> id_libro <%= relazione.id_libro %></li>
+                <li> <a href="/modifica/relazione/<%= relazione.id %>">Modifica</a></li>
+                <li> </li><form action="/delrelazione" method="post">
+                    <input type="hidden" name="id" value="<%= relazione.id %>">
+                    <input type="submit" value="Elimina">
+                </form>
+              </li>
+            </ul>
+        <% }) %>
+        <ul>
+            <form action="/addrelazione" method="post">
+                <li><input type="text" name="id_autore"></li>
+                <li><input type="text" name="id_libro"></li>
+                <li><input type="submit" value="Aggiungi"></li>
+            </form>
+        </ul>
+    
 </body>
 </html>

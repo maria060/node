@@ -5,24 +5,13 @@
     <title>Document</title>
 </head>
 <body>
-    <p> questo è un paragrafo </p>
-    <% autori.forEach(autore => { %>  
-        <ul> 
-          <li> nome: <%= autore.nome %>  </li>  
-          <li>   cognome:  <%= autore.cognome %> </li>
-          <li>   id:   <%= autore.ID_autore %></li>
+    <h1>Lista autori e libri</h1>
+    <% rows.forEach(row => { %>
+        <ul>
+            <li>ID: <%= row.id %> </li>
+            <li>Titolo: <%= row.titolo %> </li>
+            <li>Autori: <%= row.autori %> </li>
         </ul>
-    
- 
     <% }) %>
-    <% libri.forEach(libro => { %>
-        <ul> 
-            <li> titolo:  <%= libro.titolo %>   </li>  
-            <li>   autore:   <%= libro.autore %>  </li>
-          </ul>
-      
-       
-     
-       <% }) %>
 </body>
 </html>

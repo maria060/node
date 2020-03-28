@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <title>Modifica PC</title>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"> 
+    </head>
+    <body>
+        <p><a href="/">Ritorna Home page</a></p>
+        <p class="intestazione">ID Autore</p>
+        <p class="intestazione2">ID Libro</p>
+        <form method="POST" action="/modrelazione">
+            <input type="hidden" name="id" value="<%= relazione.id %>">
+            <input type="text" name="id_autore" value="<%= relazione.id_autore %>">
+            <input type="text" name="id_libro" value="<%= relazione.id_libro %>">
+            <input type="submit" value="Modifica">
+        </form>
+    </body>
+</html>

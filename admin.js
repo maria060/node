@@ -15,26 +15,34 @@ const db = new sqlite3.Database('./libri.db',()=>{
     console.log('Server running on http://localhost:8081');
     console.log('database open')
 });
-
 app.get('/',(req,res)=>{
-    sqlA='select * from Autori';
-    sqlL='select * from Libri';
-    db.all(sqlA,(err,aRows)=>{
-        db.all(sqlL,(err,lRows)=>{
-            console.log(aRows)
-            console.log(lRows)
-            res.render("modifica",{autori:aRows,libri:lRows});
-        });
+    let sql = "SELECT * FROM Autori";
+    db.all(sql,(err,rows)=>{
+        autori=rows;
+        if (err) res.send('errore 1');
+        else {
+            sql = "SELECT * FROM Libri";
+            db.all(sql,(err,rows)=>{
+                libri=rows;
+                if (err) res.send('errore 2');
+                else {
+                    sql = "SELECT * FROM autori_libri";
+                    db.all(sql,(err,rows)=>{
+                        relazioni=rows
+                        if (err) res.send('errore 3');
+                        else res.render('modifica',{autori,libri,relazioni});
+                    });
+                }
+            });
+        }
     });
 });
-
 app.get('/modifica/autori/:id',(req,res)=>{
     sqlA=`select * from Autori where id_autore = ${req.params.id}`;
     db.each(sqlA,(err,aRow)=>{
         res.render('file',{autore:aRow});
     });
 });
-
 app.post('/modautore',(req,res)=>{
     const id=parseInt(req.body.id_autore);
     sql=`UPDATE Autori SET nome='${req.body.nome}',cognome='${req.body.cognome}' WHERE Autori.ID_autore = ${id}`;
@@ -55,7 +63,6 @@ app.post('/delautore',(req,res)=>{
     db.run(sql)
     res.redirect('/');
 });
-
 app.get('/modifica/libri/:id',(req,res)=>{
     sql=`select * from Libri where ID_libro = ${req.params.id}`;
     db.each(sql,(err,row)=>{
@@ -88,7 +95,31 @@ app.post('/dellibro',(req,res)=>{
     db.run(sql)
     res.redirect('/');
 });
+app.get('/modifica/relazione/:id',(req,res)=>{
+    sql=`select * from autori_libri where id = ${req.params.id}`;
+    db.each(sql,(err,row)=>{
+        res.render('modRelazione',{relazione:row});
+    });
+});
 
+app.post('/modrelazione',(req,res)=>{
+    const id=parseInt(req.body.id);
+    sql=`UPDATE autori_libri SET id_autore='${req.body.id_autore}',id_libro='${req.body.id_libro}' WHERE autori_libri.id = ${id}`;
+    db.run(sql);
+    res.redirect("/");
+});
+
+app.post('/delrelazione',(req,res)=>{
+    const id=parseInt(req.body.id);
+    let sql = `DELETE FROM autori_libri WHERE autori_libri.id=${id}`;
+    db.run(sql);;
+    res.redirect('/');
+});
+app.post("/addrelazione", function(req, res) {
+    sql="insert into autori_libri (id_autore, id_libro) values('"+req.body.id_autore+"','"+req.body.id_libro+"')";
+    db.run(sql);
+    res.redirect('/');
+});
 app.use((req,res)=>{
     res.status(404);
     res.sendFile(path.join(__dirname,'public','index.html'));
